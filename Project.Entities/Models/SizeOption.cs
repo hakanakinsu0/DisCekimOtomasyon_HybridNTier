@@ -19,5 +19,6 @@ namespace Project.Entities.Models
 
         //Relational Properties
         public virtual ServiceCategory ServiceCategory { get; set; } // 1 SizeOption 1 ServiceCategory, 1 ServiceCategory N SizeOption
+
     }
 }

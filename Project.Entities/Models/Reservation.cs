@@ -16,6 +16,9 @@ namespace Project.Entities.Models
         public int CustomerId { get; set; }
         public int LocationId { get; set; }
         public int PhotographerId { get; set; }
+        public int ServiceCategoryId { get; set; }
+        public int PackageOptionId { get; set; }
+        public int AppUserId { get; set; }
 
         //Properties
         public DateTime ScheduledDate { get; set; }
@@ -27,6 +30,11 @@ namespace Project.Entities.Models
         public virtual Location Location { get; set; }
         public virtual Photographer Photographer { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
+        public virtual ServiceCategory ServiceCategory { get; set; }
+        public virtual PackageOption PackageOption { get; set; }
+        public virtual ICollection<ReservationExtra> ReservationExtras { get; set; }
+        public virtual AppUser AppUser { get; set; }
+
 
     }
 }

@@ -21,5 +21,7 @@ namespace Project.Entities.Models
         //Relational Properties
         public virtual AlbumCompany AlbumCompany { get; set; }              // 1 AlbumCompany N ServiceCategory, 1 ServiceCategory 1 AlbumCompany
         public virtual ICollection<SizeOption> SizeOptions { get; set; }    // 1 ServiceCategory N SizeOption, 1 SizeOption 1 ServiceCategory
+        public virtual ICollection<Reservation> Reservations { get; set; }
+
     }
 }
