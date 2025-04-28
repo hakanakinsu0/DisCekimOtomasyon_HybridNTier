@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Project.DAL.Migrations
 {
     /// <inheritdoc />
@@ -507,6 +509,20 @@ namespace Project.DAL.Migrations
                         principalTable: "Reservations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AlbumCompanies",
+                columns: new[] { "Id", "Address", "ContactPersonEmail", "ContactPersonName", "ContactPersonPhone", "CreatedDate", "DeletedDate", "Email", "ModifiedDate", "Name", "Phone", "Status" },
+                values: new object[] { 1, "Karayolları Mah. 559 Sk. No:18/1 G.O.PAŞA / İSTANBUL / TÜRKİYE", "cizgialbum@gmail.com", "Test", "+905359750193", new DateTime(2025, 4, 29, 0, 50, 5, 40, DateTimeKind.Local).AddTicks(4185), null, "cizgialbum@gmail.com", null, "ÇİZGİ ALBÜM FOTOĞRAFÇILIK", "+02125387994", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Photographers",
+                columns: new[] { "Id", "CreatedDate", "DeletedDate", "Fee", "FirstName", "LastName", "ModifiedDate", "Phone", "Status" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2025, 4, 29, 0, 50, 5, 40, DateTimeKind.Local).AddTicks(4144), null, 0m, "Fotografci", "Bir", null, "+905554443322", 1 },
+                    { 2, new DateTime(2025, 4, 29, 0, 50, 5, 40, DateTimeKind.Local).AddTicks(4157), null, 2000m, "Fotografci", "Iki", null, "+05551112233", 1 }
                 });
 
             migrationBuilder.CreateIndex(

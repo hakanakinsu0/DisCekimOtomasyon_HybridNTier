@@ -19,9 +19,4 @@
     <ProjectReference Include="..\Project.Configuration\Project.Configuration.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\Concretes\" />
-    <Folder Include="Repositories\Abstracts\" />
-  </ItemGroup>
-
 </Project>

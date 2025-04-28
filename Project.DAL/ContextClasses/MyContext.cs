@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Project.Configuration.Options;
+using Project.DAL.BogusHandling;
 using Project.Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,9 @@ namespace Project.DAL.ContextClasses
             builder.ApplyConfiguration(new ExtraServiceConfiguration());
             builder.ApplyConfiguration(new PackageExtraConfiguration());
             builder.ApplyConfiguration(new ReservationExtraConfiguration());
+
+            PhotographerSeed.SeedPhotographers(builder);
+            AlbumCompanySeed.SeedAlbumCompanies(builder);
 
         }
 

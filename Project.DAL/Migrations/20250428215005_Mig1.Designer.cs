@@ -12,7 +12,7 @@ using Project.DAL.ContextClasses;
 namespace Project.DAL.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20250426203148_Mig1")]
+    [Migration("20250428215005_Mig1")]
     partial class Mig1
     {
         /// <inheritdoc />
@@ -207,6 +207,21 @@ namespace Project.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AlbumCompanies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Karayolları Mah. 559 Sk. No:18/1 G.O.PAŞA / İSTANBUL / TÜRKİYE",
+                            ContactPersonEmail = "cizgialbum@gmail.com",
+                            ContactPersonName = "Test",
+                            ContactPersonPhone = "+905359750193",
+                            CreatedDate = new DateTime(2025, 4, 29, 0, 50, 5, 40, DateTimeKind.Local).AddTicks(4185),
+                            Email = "cizgialbum@gmail.com",
+                            Name = "ÇİZGİ ALBÜM FOTOĞRAFÇILIK",
+                            Phone = "+02125387994",
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("Project.Entities.Models.AppUser", b =>
@@ -605,6 +620,28 @@ namespace Project.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Photographers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2025, 4, 29, 0, 50, 5, 40, DateTimeKind.Local).AddTicks(4144),
+                            Fee = 0m,
+                            FirstName = "Fotografci",
+                            LastName = "Bir",
+                            Phone = "+905554443322",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2025, 4, 29, 0, 50, 5, 40, DateTimeKind.Local).AddTicks(4157),
+                            Fee = 2000m,
+                            FirstName = "Fotografci",
+                            LastName = "Iki",
+                            Phone = "+05551112233",
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("Project.Entities.Models.Reservation", b =>

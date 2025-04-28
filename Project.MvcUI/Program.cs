@@ -1,20 +1,15 @@
-using Microsoft.EntityFrameworkCore;
-using Project.DAL.ContextClasses;
+using Project.BLL.DependencyResolvers;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-
-builder.Services
-    .AddDbContext<MyContext>(opts =>
-        opts.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection"))
-            .UseLazyLoadingProxies()
-    );
+builder.Services.AddDbContextService();     //DependencyResolvers'tan geldi.
+builder.Services.AddIdentityService();      //DependencyResolvers'tan geldi.
+builder.Services.AddRepositoryService();    //DependencyResolvers'tan geldi.
 
 WebApplication app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
