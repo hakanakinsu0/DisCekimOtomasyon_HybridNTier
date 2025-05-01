@@ -1,4 +1,4 @@
-using Project.BLL.DependencyResolvers;
+﻿using Project.BLL.DependencyResolvers;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +8,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContextService();     //DependencyResolvers'tan geldi.
 builder.Services.AddIdentityService();      //DependencyResolvers'tan geldi.
 builder.Services.AddRepositoryService();    //DependencyResolvers'tan geldi.
+builder.Services.AddMapperService();        //DependencyResolvers'tan geldi.
+builder.Services.AddManagerService();       //DependencyResolvers'tan geldi.;
 
 WebApplication app = builder.Build();
 
@@ -20,7 +22,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication();   
+app.UseAuthorization();    
 
 app.MapControllerRoute(
     name: "default",
