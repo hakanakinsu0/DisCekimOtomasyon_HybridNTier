@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Entities", "Project.Entities\Project.Entities.csproj", "{8184FD30-C866-4C0E-8A5E-54B00578709E}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Common", "Project.Common\Project.Common.csproj", "{BAE5519A-61BA-4532-A812-7F7754F88AC6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.MvcUI", "Project.MvcUI\Project.MvcUI.csproj", "{F236BEA5-1AD4-4A74-8971-3706C471F8EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Common.Tester", "Project.Common.Tester\Project.Common.Tester.csproj", "{05A166E6-DA04-44A5-81B1-48B8AAA0BAF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{F236BEA5-1AD4-4A74-8971-3706C471F8EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F236BEA5-1AD4-4A74-8971-3706C471F8EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F236BEA5-1AD4-4A74-8971-3706C471F8EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05A166E6-DA04-44A5-81B1-48B8AAA0BAF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05A166E6-DA04-44A5-81B1-48B8AAA0BAF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05A166E6-DA04-44A5-81B1-48B8AAA0BAF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05A166E6-DA04-44A5-81B1-48B8AAA0BAF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

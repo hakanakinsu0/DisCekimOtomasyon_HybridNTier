@@ -7,6 +7,7 @@ using Project.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,10 +15,19 @@ namespace Project.DAL.ContextClasses
 {
     public class MyContext : IdentityDbContext<AppUser,IdentityRole<int>,int>
     {
+        /// <summary>
+        /// MyContext constructor'ı, dışarıdan gelen DbContextOptions ile başlatılır.
+        /// </summary>
+        /// <param name="opt">Veritabanı bağlantı seçenekleri</param>
         public MyContext(DbContextOptions<MyContext> opt) : base(opt)
         {
         }
 
+        /// <summary>
+        /// Veritabani konfigurasyon ayarlamalari uygulanir.
+        /// Tüm entity'lerin yapılandırmaları ApplyConfiguration() ile yüklenir.
+        /// </summary>
+        /// <param name="builder">Model yapılandırması</param>
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -37,12 +47,13 @@ namespace Project.DAL.ContextClasses
             builder.ApplyConfiguration(new PackageExtraConfiguration());
             builder.ApplyConfiguration(new ReservationExtraConfiguration());
 
+            // Seed (Başlangıç) Verileri Burada Çağrılır
+            UserAndRoleSeed.SeedAdminUser(builder);
             PhotographerSeed.SeedPhotographers(builder);
             AlbumCompanySeed.SeedAlbumCompanies(builder);
-
         }
 
-        // DbSet’ler
+        // Veritabanı Tabloları
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Location> Locations { get; set; }

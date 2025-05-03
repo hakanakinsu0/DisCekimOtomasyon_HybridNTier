@@ -53,6 +53,15 @@ namespace Project.DAL.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "621adac8-0818-423a-854a-b8f76dd9c81a",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -137,6 +146,13 @@ namespace Project.DAL.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -213,7 +229,7 @@ namespace Project.DAL.Migrations
                             ContactPersonEmail = "cizgialbum@gmail.com",
                             ContactPersonName = "Test",
                             ContactPersonPhone = "+905359750193",
-                            CreatedDate = new DateTime(2025, 4, 29, 0, 50, 5, 40, DateTimeKind.Local).AddTicks(4185),
+                            CreatedDate = new DateTime(2025, 5, 3, 1, 24, 12, 32, DateTimeKind.Local).AddTicks(7301),
                             Email = "cizgialbum@gmail.com",
                             Name = "ÇİZGİ ALBÜM FOTOĞRAFÇILIK",
                             Phone = "+02125387994",
@@ -302,6 +318,27 @@ namespace Project.DAL.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ActivationCode = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ConcurrencyStamp = "e4f78172-7d68-463f-933d-28b637cf8296",
+                            CreatedDate = new DateTime(2025, 5, 3, 1, 24, 12, 32, DateTimeKind.Local).AddTicks(7104),
+                            Email = "fotoeylul@email.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "FOTOEYLUL@EMAIL.COM",
+                            NormalizedUserName = "FOTOEYLUL",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFLXAiDwfKov0OT7smU7Csw7xN5lMT6cDV3FTIUXkgcGp6W0MhcQB93MesEA6qoV+Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "1e60e2b1-68e6-41ea-a13a-733526aecba7",
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "fotoeylul"
+                        });
                 });
 
             modelBuilder.Entity("Project.Entities.Models.Customer", b =>
@@ -622,7 +659,7 @@ namespace Project.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2025, 4, 29, 0, 50, 5, 40, DateTimeKind.Local).AddTicks(4144),
+                            CreatedDate = new DateTime(2025, 5, 3, 1, 24, 12, 32, DateTimeKind.Local).AddTicks(7269),
                             Fee = 0m,
                             FirstName = "Fotografci",
                             LastName = "Bir",
@@ -632,7 +669,7 @@ namespace Project.DAL.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2025, 4, 29, 0, 50, 5, 40, DateTimeKind.Local).AddTicks(4157),
+                            CreatedDate = new DateTime(2025, 5, 3, 1, 24, 12, 32, DateTimeKind.Local).AddTicks(7274),
                             Fee = 2000m,
                             FirstName = "Fotografci",
                             LastName = "Iki",

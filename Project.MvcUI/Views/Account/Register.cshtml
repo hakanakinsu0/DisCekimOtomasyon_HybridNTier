@@ -1,0 +1,57 @@
+﻿@model RegisterPageVm
+
+@{
+    ViewData["Title"] = "Yeni Kullanıcı Kaydı";
+}
+
+<div class="container min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="row w-100">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-5 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-center mb-4">Yeni Admin Oluştur</h3>
+
+                    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                    <form asp-action="Register" method="post" novalidate>
+                        <div class="form-floating mb-3">
+                            <input asp-for="Request.Username" class="form-control" id="floatingUsername" placeholder="Kullanıcı Adı" />
+                            <label for="floatingUsername">Kullanıcı Adı</label>
+                            <span asp-validation-for="Request.Username" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Request.Email" type="email" class="form-control" id="floatingEmail" placeholder="E-posta" />
+                            <label for="floatingEmail">E-posta</label>
+                            <span asp-validation-for="Request.Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Request.Password" type="password" class="form-control" id="floatingPassword" placeholder="Şifre" />
+                            <label for="floatingPassword">Şifre</label>
+                            <span asp-validation-for="Request.Password" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Request.ConfirmPassword" type="password" class="form-control" id="floatingConfirm" placeholder="Şifre (Tekrar)" />
+                            <label for="floatingConfirm">Şifre (Tekrar)</label>
+                            <span asp-validation-for="Request.ConfirmPassword" class="text-danger small"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">Kayıt Ol</button>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <small class="text-muted">Sadece Admin rolündeki kullanıcılar kayıt yapabilir.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
