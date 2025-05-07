@@ -1,0 +1,53 @@
+﻿@model PhotographerEditPageVm
+
+@{
+    ViewData["Title"] = "Fotoğrafçı Düzenle";
+}
+
+<div class="container py-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <form asp-action="Edit" method="post">
+        @* CSRF Token *@
+        @Html.AntiForgeryToken()
+
+        @* Model ve Response hataları *@
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        @* Id gizli alan olarak gönderilir *@
+        <input asp-for="Request.Id" type="hidden" />
+
+        <div class="form-floating mb-3">
+            <input asp-for="Request.FirstName" class="form-control" placeholder="Ad" />
+            <label asp-for="Request.FirstName"></label>
+            <span asp-validation-for="Request.FirstName" class="text-danger small"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Request.LastName" class="form-control" placeholder="Soyad" />
+            <label asp-for="Request.LastName"></label>
+            <span asp-validation-for="Request.LastName" class="text-danger small"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Request.Phone" class="form-control" placeholder="Telefon" />
+            <label asp-for="Request.Phone"></label>
+            <span asp-validation-for="Request.Phone" class="text-danger small"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Request.Fee" type="number" step="0.01" class="form-control" placeholder="Ücret (₺)" />
+            <label asp-for="Request.Fee"></label>
+            <span asp-validation-for="Request.Fee" class="text-danger small"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">İptal</a>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

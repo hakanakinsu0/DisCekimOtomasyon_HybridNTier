@@ -1,0 +1,20 @@
+﻿@model PhotographerDeletePageVm
+
+@{
+    ViewData["Title"] = "Fotoğrafçı Sil";
+}
+
+<div class="container py-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <div class="alert alert-warning">
+        <p>“<strong>@Model.Request.FullName</strong>” adlı fotoğrafçıyı gerçekten silmek istiyor musunuz?</p>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input asp-for="Request.Id" type="hidden" />
+        <button type="submit" class="btn btn-danger">Evet, Sil</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Hayır, Geri Dön</a>
+    </form>
+</div>
