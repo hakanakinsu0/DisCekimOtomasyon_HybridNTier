@@ -1,0 +1,48 @@
+﻿@model CustomerCreatePageVm
+
+@{
+    ViewData["Title"] = "Yeni Müşteri Ekle";
+}
+
+<div class="container py-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <form asp-action="Create" method="post" novalidate>
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Request.BrideName" class="form-control" placeholder="Gelin Adı" />
+            <label asp-for="Request.BrideName"></label>
+            <span asp-validation-for="Request.BrideName" class="text-danger small"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Request.GroomName" class="form-control" placeholder="Damat Adı" />
+            <label asp-for="Request.GroomName"></label>
+            <span asp-validation-for="Request.GroomName" class="text-danger small"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Request.LastName" class="form-control" placeholder="Soyad" />
+            <label asp-for="Request.LastName"></label>
+            <span asp-validation-for="Request.LastName" class="text-danger small"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Request.Phone1" class="form-control" placeholder="Telefon 1" />
+            <label asp-for="Request.Phone1"></label>
+            <span asp-validation-for="Request.Phone1" class="text-danger small"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Request.Phone2" class="form-control" placeholder="Telefon 2" />
+            <label asp-for="Request.Phone2"></label>
+            <span asp-validation-for="Request.Phone2" class="text-danger small"></span>
+        </div>
+        <div class="form-floating mb-4">
+            <input asp-for="Request.Email" class="form-control" placeholder="E-posta" />
+            <label asp-for="Request.Email"></label>
+            <span asp-validation-for="Request.Email" class="text-danger small"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Kaydet</button>
+    </form>
+</div>
+

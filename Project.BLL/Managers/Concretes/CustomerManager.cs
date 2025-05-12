@@ -17,5 +17,23 @@ namespace Project.BLL.Managers.Concretes
             : base(repository, mapper)
         {
         }
+
+        public async Task<List<CustomerDto>> GetAllWithFilterAsync(string? searchTerm)
+        {
+            // Tüm kayıtları çek
+            List<Customer> entities = await _repository.GetAllAsync();
+
+            // DTO’lara dönüştür
+            List<CustomerDto> dtos = _mapper.Map<List<CustomerDto>>(entities);
+
+            // Arama terimi varsa in-memory filtre uygula (ad/soyad/e-posta)
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                dtos = dtos.Where(c =>$"{c.BrideName} {c.GroomName} {c.LastName} {c.Email}".Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            return dtos;
+        }
+
     }
 }
