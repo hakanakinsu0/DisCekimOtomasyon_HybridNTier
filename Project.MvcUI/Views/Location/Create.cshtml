@@ -1,0 +1,96 @@
+﻿@model LocationCreatePageVm
+
+@{
+    ViewData["Title"] = "Yeni Mekan Ekle";
+}
+
+<div class="container py-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <form asp-action="Create" method="post" novalidate>
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Request.Name" class="form-control" placeholder="Mekan Adı" />
+            <label asp-for="Request.Name"></label>
+            <span asp-validation-for="Request.Name" class="text-danger small"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Request.Address" class="form-control" placeholder="Adres" />
+            <label asp-for="Request.Address"></label>
+            <span asp-validation-for="Request.Address" class="text-danger small"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Request.District" class="form-control" placeholder="İlçe" />
+            <label asp-for="Request.District"></label>
+            <span asp-validation-for="Request.District" class="text-danger small"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Request.City" class="form-control" placeholder="Şehir" />
+            <label asp-for="Request.City"></label>
+            <span asp-validation-for="Request.City" class="text-danger small"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Request.Phone" class="form-control" placeholder="Telefon" />
+            <label asp-for="Request.Phone"></label>
+            <span asp-validation-for="Request.Phone" class="text-danger small"></span>
+        </div>
+        <!-- Ücretsiz checkbox -->
+        <div class="form-check mb-3">
+            <input asp-for="Request.IsFree"
+                   class="form-check-input"
+                   id="isFreeCheck" />
+            <label asp-for="Request.IsFree"
+                   class="form-check-label"
+                   for="isFreeCheck"></label>
+        </div>
+
+        <!-- Fiyat alanı -->
+        <div class="form-floating mb-4">
+            <input asp-for="Request.Price"
+                   class="form-control"
+                   id="priceInput"
+                   placeholder="Fiyat" />
+            <label asp-for="Request.Price"></label>
+            <span asp-validation-for="Request.Price"
+                  class="text-danger small"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">Kaydet</button>
+    </form>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+        <script>
+            // Sayfa yüklendiğinde ve checkbox her değiştiğinde çalışacak
+            (function(){
+                var $free = $('#isFreeCheck'),
+                    $price = $('#priceInput');
+
+                function togglePrice(){
+                    if($free.is(':checked')){
+                        // Ücretsiz seçiliyse
+                        $price
+                          .val('')             // mevcut değeri temizle
+                          .prop('disabled', true)  // devre dışı bırak
+                          .removeAttr('required'); // required özelliğini kaldır
+                    } else {
+                        // Ücretsiz seçili değilse
+                        $price
+                          .prop('disabled', false) // etkinleştir
+                          .attr('required', 'required'); // zorunlu yap
+                    }
+                }
+
+                // Olay atamaları
+                $free.on('change', togglePrice);
+                // İlk durum için hemen tetikle
+                togglePrice();
+            })();
+        </script>
+    }
+</div>
+
