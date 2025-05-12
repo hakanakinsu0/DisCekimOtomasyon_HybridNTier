@@ -1,0 +1,25 @@
+﻿@model ExtraServiceCategoryDeletePageVm
+
+@{
+    ViewData["Title"] = "Kategori Sil";
+}
+
+<div class="container py-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <div class="alert alert-warning">
+        <p>“<strong>@Model.Request.Name</strong>” adlı kategoriyi silmek istediğinize emin misiniz?</p>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input asp-for="Request.Id" type="hidden" />
+
+        <button type="submit" class="btn btn-danger">Evet, Sil</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">İptal</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

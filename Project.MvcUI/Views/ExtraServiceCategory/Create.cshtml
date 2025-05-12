@@ -1,0 +1,26 @@
+﻿@model ExtraServiceCategoryCreatePageVm
+
+@{
+    ViewData["Title"] = "Yeni Kategori Ekle";
+}
+
+<div class="container py-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <form asp-action="Create" method="post" novalidate>
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="form-floating mb-4">
+            <input asp-for="Request.Name" class="form-control" placeholder="Kategori Adı" />
+            <label asp-for="Request.Name"></label>
+            <span asp-validation-for="Request.Name" class="text-danger small"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Kaydet</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
