@@ -1,0 +1,43 @@
+﻿@model ReservationExtraCreatePageVm
+
+@{
+    ViewData["Title"] = "Rezervasyona Ekstra Hizmet Ekle";
+}
+
+<div class="container py-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <form asp-action="Create" method="post" novalidate>
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="Request.ReservationId" class="form-label"></label>
+            <select asp-for="Request.ReservationId" asp-items="Model.Reservations" class="form-select">
+                <option value="">-- Rezervasyon Seçin --</option>
+            </select>
+            <span asp-validation-for="Request.ReservationId" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Request.ExtraServiceId" class="form-label"></label>
+            <select asp-for="Request.ExtraServiceId" asp-items="Model.ExtraServices" class="form-select">
+                <option value="">-- Hizmet Seçin --</option>
+            </select>
+            <span asp-validation-for="Request.ExtraServiceId" class="text-danger small"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Request.Quantity" class="form-control" placeholder="Miktar" />
+            <label asp-for="Request.Quantity"></label>
+            <span asp-validation-for="Request.Quantity" class="text-danger small"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">Kaydet</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">İptal</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

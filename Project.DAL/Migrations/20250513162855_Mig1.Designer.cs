@@ -12,7 +12,7 @@ using Project.DAL.ContextClasses;
 namespace Project.DAL.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20250502222412_Mig1")]
+    [Migration("20250513162855_Mig1")]
     partial class Mig1
     {
         /// <inheritdoc />
@@ -61,7 +61,7 @@ namespace Project.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "621adac8-0818-423a-854a-b8f76dd9c81a",
+                            ConcurrencyStamp = "8255a608-774e-4611-b104-83938e844a6b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -232,7 +232,7 @@ namespace Project.DAL.Migrations
                             ContactPersonEmail = "cizgialbum@gmail.com",
                             ContactPersonName = "Test",
                             ContactPersonPhone = "+905359750193",
-                            CreatedDate = new DateTime(2025, 5, 3, 1, 24, 12, 32, DateTimeKind.Local).AddTicks(7301),
+                            CreatedDate = new DateTime(2025, 5, 13, 19, 28, 55, 145, DateTimeKind.Local).AddTicks(7409),
                             Email = "cizgialbum@gmail.com",
                             Name = "ÇİZGİ ALBÜM FOTOĞRAFÇILIK",
                             Phone = "+02125387994",
@@ -328,16 +328,16 @@ namespace Project.DAL.Migrations
                             Id = 1,
                             AccessFailedCount = 0,
                             ActivationCode = new Guid("00000000-0000-0000-0000-000000000000"),
-                            ConcurrencyStamp = "e4f78172-7d68-463f-933d-28b637cf8296",
-                            CreatedDate = new DateTime(2025, 5, 3, 1, 24, 12, 32, DateTimeKind.Local).AddTicks(7104),
+                            ConcurrencyStamp = "f986ee36-c2b4-4cee-94bd-d7d04d0b927d",
+                            CreatedDate = new DateTime(2025, 5, 13, 19, 28, 55, 145, DateTimeKind.Local).AddTicks(7183),
                             Email = "fotoeylul@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "FOTOEYLUL@EMAIL.COM",
                             NormalizedUserName = "FOTOEYLUL",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFLXAiDwfKov0OT7smU7Csw7xN5lMT6cDV3FTIUXkgcGp6W0MhcQB93MesEA6qoV+Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEB1Kr+ORPDtFCis7NhU1PYllLPrRKw68NWeCZEeOlUm9ReyI/6C06KE/h4ujgTINzg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1e60e2b1-68e6-41ea-a13a-733526aecba7",
+                            SecurityStamp = "b7edab9d-0612-4e23-bcf0-0e269f806de4",
                             Status = 1,
                             TwoFactorEnabled = false,
                             UserName = "fotoeylul"
@@ -662,7 +662,7 @@ namespace Project.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2025, 5, 3, 1, 24, 12, 32, DateTimeKind.Local).AddTicks(7269),
+                            CreatedDate = new DateTime(2025, 5, 13, 19, 28, 55, 145, DateTimeKind.Local).AddTicks(7370),
                             Fee = 0m,
                             FirstName = "Fotografci",
                             LastName = "Bir",
@@ -672,7 +672,7 @@ namespace Project.DAL.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2025, 5, 3, 1, 24, 12, 32, DateTimeKind.Local).AddTicks(7274),
+                            CreatedDate = new DateTime(2025, 5, 13, 19, 28, 55, 145, DateTimeKind.Local).AddTicks(7374),
                             Fee = 2000m,
                             FirstName = "Fotografci",
                             LastName = "Iki",

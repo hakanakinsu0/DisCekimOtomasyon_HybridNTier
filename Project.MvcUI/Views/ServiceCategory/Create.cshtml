@@ -1,0 +1,24 @@
+﻿@model ServiceCategoryCreatePageVm
+
+<form asp-action="Create" method="post" novalidate>
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="Request.AlbumCompanyId" class="form-label"></label>
+        <select asp-for="Request.AlbumCompanyId"
+                asp-items="Model.Companies"
+                class="form-select">
+            <option value="">-- Albüm Firması Seçin --</option>
+        </select>
+        <span asp-validation-for="Request.AlbumCompanyId" class="text-danger small"></span>
+    </div>
+
+    <div class="form-floating mb-4">
+        <input asp-for="Request.Name" class="form-control" placeholder="Kategori Adı" />
+        <label asp-for="Request.Name"></label>
+        <span asp-validation-for="Request.Name" class="text-danger small"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">Kaydet</button>
+</form>

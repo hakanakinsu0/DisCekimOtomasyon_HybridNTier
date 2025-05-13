@@ -514,25 +514,25 @@ namespace Project.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "AlbumCompanies",
                 columns: new[] { "Id", "Address", "ContactPersonEmail", "ContactPersonName", "ContactPersonPhone", "CreatedDate", "DeletedDate", "Email", "ModifiedDate", "Name", "Phone", "Status" },
-                values: new object[] { 1, "Karayolları Mah. 559 Sk. No:18/1 G.O.PAŞA / İSTANBUL / TÜRKİYE", "cizgialbum@gmail.com", "Test", "+905359750193", new DateTime(2025, 5, 3, 1, 24, 12, 32, DateTimeKind.Local).AddTicks(7301), null, "cizgialbum@gmail.com", null, "ÇİZGİ ALBÜM FOTOĞRAFÇILIK", "+02125387994", 1 });
+                values: new object[] { 1, "Karayolları Mah. 559 Sk. No:18/1 G.O.PAŞA / İSTANBUL / TÜRKİYE", "cizgialbum@gmail.com", "Test", "+905359750193", new DateTime(2025, 5, 13, 19, 28, 55, 145, DateTimeKind.Local).AddTicks(7409), null, "cizgialbum@gmail.com", null, "ÇİZGİ ALBÜM FOTOĞRAFÇILIK", "+02125387994", 1 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { 1, "621adac8-0818-423a-854a-b8f76dd9c81a", "Admin", "ADMIN" });
+                values: new object[] { 1, "8255a608-774e-4611-b104-83938e844a6b", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ActivationCode", "ConcurrencyStamp", "CreatedDate", "DeletedDate", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "ModifiedDate", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Status", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, new Guid("00000000-0000-0000-0000-000000000000"), "e4f78172-7d68-463f-933d-28b637cf8296", new DateTime(2025, 5, 3, 1, 24, 12, 32, DateTimeKind.Local).AddTicks(7104), null, "fotoeylul@email.com", true, false, null, null, "FOTOEYLUL@EMAIL.COM", "FOTOEYLUL", "AQAAAAIAAYagAAAAEFLXAiDwfKov0OT7smU7Csw7xN5lMT6cDV3FTIUXkgcGp6W0MhcQB93MesEA6qoV+Q==", null, false, "1e60e2b1-68e6-41ea-a13a-733526aecba7", 1, false, "fotoeylul" });
+                values: new object[] { 1, 0, new Guid("00000000-0000-0000-0000-000000000000"), "f986ee36-c2b4-4cee-94bd-d7d04d0b927d", new DateTime(2025, 5, 13, 19, 28, 55, 145, DateTimeKind.Local).AddTicks(7183), null, "fotoeylul@email.com", true, false, null, null, "FOTOEYLUL@EMAIL.COM", "FOTOEYLUL", "AQAAAAIAAYagAAAAEB1Kr+ORPDtFCis7NhU1PYllLPrRKw68NWeCZEeOlUm9ReyI/6C06KE/h4ujgTINzg==", null, false, "b7edab9d-0612-4e23-bcf0-0e269f806de4", 1, false, "fotoeylul" });
 
             migrationBuilder.InsertData(
                 table: "Photographers",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "Fee", "FirstName", "LastName", "ModifiedDate", "Phone", "Status" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 5, 3, 1, 24, 12, 32, DateTimeKind.Local).AddTicks(7269), null, 0m, "Fotografci", "Bir", null, "+905554443322", 1 },
-                    { 2, new DateTime(2025, 5, 3, 1, 24, 12, 32, DateTimeKind.Local).AddTicks(7274), null, 2000m, "Fotografci", "Iki", null, "+05551112233", 1 }
+                    { 1, new DateTime(2025, 5, 13, 19, 28, 55, 145, DateTimeKind.Local).AddTicks(7370), null, 0m, "Fotografci", "Bir", null, "+905554443322", 1 },
+                    { 2, new DateTime(2025, 5, 13, 19, 28, 55, 145, DateTimeKind.Local).AddTicks(7374), null, 2000m, "Fotografci", "Iki", null, "+05551112233", 1 }
                 });
 
             migrationBuilder.InsertData(

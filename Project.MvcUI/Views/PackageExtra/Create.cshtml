@@ -1,0 +1,42 @@
+﻿@model PackageExtraCreatePageVm
+
+@{
+    ViewData["Title"] = "Yeni Paket Ekstra Ekle";
+}
+
+<div class="container py-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <form asp-action="Create" method="post" novalidate>
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="Request.PackageOptionId" class="form-label"></label>
+            <select asp-for="Request.PackageOptionId" asp-items="Model.PackageOptions" class="form-select">
+                <option value="">-- Paket Seçeneği Seçin --</option>
+            </select>
+            <span asp-validation-for="Request.PackageOptionId" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Request.ExtraServiceId" class="form-label"></label>
+            <select asp-for="Request.ExtraServiceId" asp-items="Model.ExtraServices" class="form-select">
+                <option value="">-- Ekstra Hizmet Seçin --</option>
+            </select>
+            <span asp-validation-for="Request.ExtraServiceId" class="text-danger small"></span>
+        </div>
+
+        <div class="form-floating mb-4">
+            <input asp-for="Request.Quantity" class="form-control" placeholder="Adet" />
+            <label asp-for="Request.Quantity"></label>
+            <span asp-validation-for="Request.Quantity" class="text-danger small"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Kaydet</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

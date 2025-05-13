@@ -1,0 +1,90 @@
+﻿@model ReservationCreatePageVm
+@using Project.Entities.Enums
+
+@{
+    ViewData["Title"] = "Yeni Rezervasyon Ekle";
+}
+
+<div class="container py-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <a asp-action="Create" asp-controller="Customer"> Yeni Müşteri Ekle</a>
+    <form asp-action="Create" method="post" novalidate>
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="Request.CustomerId" class="form-label"></label>
+                <select asp-for="Request.CustomerId" asp-items="Model.Customers" class="form-select">
+                    <option value="">-- Müşteri Seçin --</option>
+                </select>
+                <span asp-validation-for="Request.CustomerId" class="text-danger small"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Request.LocationId" class="form-label"></label>
+                <select asp-for="Request.LocationId" asp-items="Model.Locations" class="form-select">
+                    <option value="">-- Mekan Seçin --</option>
+                </select>
+                <span asp-validation-for="Request.LocationId" class="text-danger small"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Request.PhotographerId" class="form-label"></label>
+                <select asp-for="Request.PhotographerId" asp-items="Model.Photographers" class="form-select">
+                    <option value="">-- Fotoğrafçı Seçin --</option>
+                </select>
+                <span asp-validation-for="Request.PhotographerId" class="text-danger small"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Request.ServiceCategoryId" class="form-label"></label>
+                <select asp-for="Request.ServiceCategoryId" asp-items="Model.ServiceCategories" class="form-select">
+                    <option value="">-- Kategori Seçin --</option>
+                </select>
+                <span asp-validation-for="Request.ServiceCategoryId" class="text-danger small"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Request.PackageOptionId" class="form-label"></label>
+                <select asp-for="Request.PackageOptionId" asp-items="Model.PackageOptions" class="form-select">
+                    <option value="">-- Paket Seçin --</option>
+                </select>
+                <span asp-validation-for="Request.PackageOptionId" class="text-danger small"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Request.AppUserId" class="form-label"></label>
+                <select asp-for="Request.AppUserId" asp-items="Model.AppUsers" class="form-select">
+                    <option value="">-- Kullanıcı Seçin --</option>
+                </select>
+                <span asp-validation-for="Request.AppUserId" class="text-danger small"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Request.ScheduledDate" class="form-label"></label>
+                <input asp-for="Request.ScheduledDate" class="form-control" type="datetime-local" />
+                <span asp-validation-for="Request.ScheduledDate" class="text-danger small"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Request.Duration" class="form-label"></label>
+                <input asp-for="Request.Duration" class="form-control" type="time" />
+                <span asp-validation-for="Request.Duration" class="text-danger small"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Request.ReservationStatus" class="form-label"></label>
+                <select asp-for="Request.ReservationStatus" class="form-select">
+                    <option value="">-- Durum Seçin --</option>
+                    @foreach (var status in Enum.GetValues<ReservationStatus>())
+                    {
+                        <option value="@status">@status</option>
+                    }
+                </select>
+                <span asp-validation-for="Request.ReservationStatus" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <div class="mt-4 d-grid">
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

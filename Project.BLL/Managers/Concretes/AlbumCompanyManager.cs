@@ -17,5 +17,22 @@ namespace Project.BLL.Managers.Concretes
             : base(repository, mapper)
         {
         }
+
+        public async Task<List<AlbumCompanyDto>> GetAllWithFilterAsync(string? searchTerm)
+        {
+            // 1) Tüm varlıkları çek
+            var entities = await _repository.GetAllAsync();
+            // 2) DTO'lara dönüştür
+            var dtos = _mapper.Map<List<AlbumCompanyDto>>(entities);
+            // 3) Arama terimi varsa ada göre filtre uygula
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                dtos = dtos
+                    .Where(ac => ac.Name
+                        .Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+            return dtos;
+        }
     }
 }

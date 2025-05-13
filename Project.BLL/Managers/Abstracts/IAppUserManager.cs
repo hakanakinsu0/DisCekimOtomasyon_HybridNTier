@@ -59,5 +59,7 @@ namespace Project.BLL.Managers.Abstracts
         /// Kullanıcı adına göre kullanıcı bilgisini getirir.
         /// </summary>
         Task<AppUserDto?> FindByUsernameAsync(string username);
+
+
     }
 }
