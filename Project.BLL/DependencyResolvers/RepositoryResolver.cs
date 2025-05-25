@@ -25,7 +25,6 @@ namespace Project.BLL.DependencyResolvers
             services.AddScoped<IPackageOptionRepository, PackageOptionRepository>();
             services.AddScoped<IExtraServiceCategoryRepository, ExtraServiceCategoryRepository>();
             services.AddScoped<IExtraServiceRepository, ExtraServiceRepository>();
-            services.AddScoped<IPackageExtraRepository, PackageExtraRepository>();
             services.AddScoped<IReservationExtraRepository, ReservationExtraRepository>();
         }
     }

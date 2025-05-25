@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Project.BLL.DtoClasses;
 using Project.BLL.Managers.Abstracts;
+using Project.BLL.Managers.Concretes;
 using Project.Entities.Enums;
 using Project.MvcUI.Models.PageVms.ReservationExtras;
 using Project.MvcUI.Models.PureVms.RequestModels.ReservationExtras;
@@ -16,12 +17,18 @@ namespace Project.MvcUI.Controllers
         readonly IReservationManager _reservationManager;
         readonly IExtraServiceManager _serviceManager;
         readonly IReservationExtraManager _reservationExtraManager;
+        readonly IPackageOptionManager _packageOptionManager;
+        private readonly IExtraServiceCategoryManager _categoryManager;  // eklendi
 
-        public ReservationExtraController(IReservationManager reservationMgr, IExtraServiceManager serviceMgr, IReservationExtraManager reservationExtraMgr)
+
+
+        public ReservationExtraController(IReservationManager reservationMgr, IExtraServiceManager serviceMgr, IReservationExtraManager reservationExtraMgr, IPackageOptionManager packageOptionManager, IExtraServiceCategoryManager categoryManager)
         {
             _reservationManager = reservationMgr;
             _serviceManager = serviceMgr;
             _reservationExtraManager = reservationExtraMgr;
+            _packageOptionManager = packageOptionManager;
+            _categoryManager = categoryManager;
         }
 
         #region ReservationExtraIndexAction
@@ -66,63 +73,101 @@ namespace Project.MvcUI.Controllers
         #region ReservationExtraCreateAction
 
         /// <summary>
-        /// Ekstra hizmet ekleme formunu görüntüler; dropdown’ları doldurur.
+        /// GET: Ekstra hizmet ekleme formu (kategori sekmeli).
         /// </summary>
-        public async Task<IActionResult> Create()
+        [HttpGet]
+        public async Task<IActionResult> Create(int reservationId, int packageOptionId)
         {
-            // Aktif rezervasyonlar
-            var resList = (await _reservationManager.GetAllAsync())
-                              .Where(r => r.Status != DataStatus.Deleted)
-                              .ToList();
+            // 1) Paket fiyatını al
+            var pkg = await _packageOptionManager.GetByIdAsync(packageOptionId);
 
-            // Aktif ekstra hizmetler
-            var svcList = (await _serviceManager.GetAllAsync())
-                              .Where(s => s.Status != DataStatus.Deleted)
-                              .ToList();
+            // 2) Kategorileri ve servisleri al
+            var categories = (await _categoryManager.GetAllAsync())
+                                 .Where(c => c.Status != DataStatus.Deleted)
+                                 .ToList();
+            var services = (await _serviceManager.GetAllAsync())
+                                 .Where(s => s.Status != DataStatus.Deleted)
+                                 .ToList();
 
-            var pageVm = new ReservationExtraCreatePageVm
+            // 3) Zaten eklenmiş miktarları al
+            var existing = (await _reservationExtraManager.GetAllAsync())
+                               .Where(x => x.ReservationId == reservationId && x.Status != DataStatus.Deleted)
+                               .ToDictionary(x => x.ExtraServiceId, x => x.Quantity);
+
+            // 4) ViewModel’e yükle
+            var vm = new ReservationExtraCreatePageVm
             {
-                Reservations = resList
-                    .Select(r => new SelectListItem($"#{r.Id} – {r.ScheduledDate:g}", r.Id.ToString()))
-                    .ToList(),
-                ExtraServices = svcList
-                    .Select(s => new SelectListItem(s.Name, s.Id.ToString()))
-                    .ToList()
+                ReservationId = reservationId,
+                PackageOptionId = packageOptionId,
+                PackagePrice = pkg?.Price ?? 0m,
+                Categories = categories,
+                Services = services,
+                ExistingCounts = existing
             };
 
-            return View(pageVm);
+            return View(vm);
         }
 
         /// <summary>
-        /// Yeni ekstra hizmet kaydını ekler, geçersizse formu tekrar gösterir.
+        /// POST: Seçilen ekstra hizmetleri kaydet & ödeme ekranına yönlendir.
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ReservationExtraCreatePageVm pageVm)
+        public async Task<IActionResult> Create(ReservationExtraCreatePageVm vm)
         {
             if (!ModelState.IsValid)
+                return RedirectToAction(nameof(Create), new
+                {
+                    reservationId = vm.ReservationId,
+                    packageOptionId = vm.PackageOptionId
+                });
+
+            // Paket opsiyonunu al
+            var pkg = await _packageOptionManager.GetByIdAsync(vm.PackageOptionId);
+            if (pkg == null)
             {
-                // Dropdown’ları yeniden yükle
-                return await Create();
+                TempData["ErrorMessage"] = "Paket bulunamadı.";
+                return RedirectToAction(nameof(Create), new
+                {
+                    reservationId = vm.ReservationId,
+                    packageOptionId = vm.PackageOptionId
+                });
             }
 
-            // DTO’ya dönüştür
-            var dto = new ReservationExtraDto
+            // Seçilen ekstra hizmetleri kaydet
+            decimal extraTotal = 0;
+            foreach (var kv in vm.SelectedExtras)
             {
-                ReservationId = pageVm.Request.ReservationId,
-                ExtraServiceId = pageVm.Request.ExtraServiceId,
-                Quantity = pageVm.Request.Quantity,
-                CreatedDate = System.DateTime.Now,
-                Status = DataStatus.Inserted
-            };
+                int svcId = kv.Key;
+                int qty = kv.Value;
+                if (qty <= 0) continue;
 
-            await _reservationExtraManager.CreateAsync(dto);
+                var svc = await _serviceManager.GetByIdAsync(svcId);
+                extraTotal += (svc?.Price ?? 0m) * qty;
 
-            TempData["SuccessMessage"] = "Ekstra hizmet başarıyla eklendi.";
-            return RedirectToAction(nameof(Index));
+                await _reservationExtraManager.CreateAsync(new ReservationExtraDto
+                {
+                    ReservationId = vm.ReservationId,
+                    ExtraServiceId = svcId,
+                    Quantity = qty,
+                    CreatedDate = DateTime.Now,
+                    Status = DataStatus.Inserted
+                });
+            }
+
+            // Paket + ekstra toplam tutar
+            var totalAmount = pkg.Price + extraTotal;
+
+            // Ödeme sayfasına yönlendir
+            return RedirectToAction("Create", "Payment", new
+            {
+                reservationId = vm.ReservationId,
+                totalAmount
+            });
         }
 
         #endregion
+
 
         #region ReservationExtraEditAction
 

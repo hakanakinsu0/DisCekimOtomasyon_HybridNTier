@@ -10,5 +10,8 @@ namespace Project.MvcUI.Models.PageVms.Payments
     {
         public PaymentIndexRequestModel Request { get; set; } = new PaymentIndexRequestModel();
         public PaymentIndexResponseModel Response { get; set; } = new PaymentIndexResponseModel();
+
+        public Dictionary<int, string> CustomerNames { get; set; } = new();
+
     }
 }

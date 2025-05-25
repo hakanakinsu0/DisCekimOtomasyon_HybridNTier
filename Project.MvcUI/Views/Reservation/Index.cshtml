@@ -12,7 +12,7 @@
         <div class="col-auto">
             <input asp-for="Request.SearchTerm"
                    class="form-control"
-                   placeholder="ID, Müşteri ID, Tarih veya Durum ile ara..." />
+                   placeholder="ID, Müşteri adı, Tarih veya Durum ile ara..." />
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-outline-primary">Ara</button>
@@ -23,12 +23,11 @@
         <thead class="table-dark">
             <tr>
                 <th>#</th>
-                <th>Müşteri ID</th>
-                <th>Mekan ID</th>
-                <th>Fotoğrafçı ID</th>
+                <th>Müşteri</th>
+                <th>Mekan</th>
+                <th>Fotoğrafçı</th>
                 <th>Tarih/Saat</th>
                 <th>Süre</th>
-                <th>Rez. Durumu</th>
                 <th>Durum</th>
                 <th>İşlemler</th>
             </tr>
@@ -38,21 +37,60 @@
             {
                 <tr>
                     <td>@item.Id</td>
-                    <td>@item.CustomerId</td>
-                    <td>@item.LocationId</td>
-                    <td>@item.PhotographerId</td>
-                    <td>@item.ScheduledDate.ToString("g")</td>
+                    <td>@Model.CustomerNames[item.CustomerId]</td>
+                    <td>@Model.LocationNames[item.LocationId]</td>
+                    <td>@Model.PhotographerNames[item.PhotographerId]</td>
+                    <td>@item.ScheduledDate.ToString("dd'/'MM'/'yyyy HH:mm")</td>
                     <td>@item.Duration</td>
-                    <td>@item.ReservationStatus</td>
                     <td>
-                        <span class="badge @(item.Status == DataStatus.Deleted ? "bg-danger" : "bg-success")">
-                            @(item.Status == DataStatus.Deleted ? "Silinmiş" : "Aktif")
-                        </span>
+                        @{
+                            var statusText = item.ReservationStatus switch
+                            {
+                                ReservationStatus.Created => "Rezervasyon Oluşturuldu",
+                                ReservationStatus.PhotographerAssigned => "Fotoğrafçı Atandı",
+                                ReservationStatus.ShootCompleted => "Çekim Yapıldı",
+                                ReservationStatus.SentToPrint => "Baskıya Gönderildi",
+                                ReservationStatus.AlbumReceived => "Albüm Teslim Alındı",
+                                ReservationStatus.DeliveredToCustomer => "Müşteriye Teslim Edildi",
+                                _ => item.ReservationStatus.ToString()
+                            };
+                        }
+                        @statusText
                     </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Düzenle</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Sil</a>
+                    <td class="align-middle">
+                        <div class="d-flex gap-1 flex-nowrap align-items-center" style="white-space: nowrap;">
+                            <form asp-controller="Reservation"
+                                  asp-action="SendSummaryEmail"
+                                  method="post"
+                                  class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <button type="submit" class="btn btn-sm btn-info">
+                                    Mail Gönder
+                                </button>
+                            </form>
+
+                            <a asp-action="Summary"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-success">
+                                Özet
+                            </a>
+
+                            <a asp-action="Edit"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-warning">
+                                Düzenle
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-danger">
+                                Sil
+                            </a>
+                        </div>
                     </td>
+
+
                 </tr>
             }
         </tbody>

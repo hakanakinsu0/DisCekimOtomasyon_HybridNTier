@@ -33,8 +33,8 @@ namespace Project.MvcUI.Controllers
             // PageVm'i oluştur ve view'a gönder
             CustomerIndexPageVm pageVm = new()
             {
-                Request = new CustomerIndexRequestModel{SearchTerm = searchTerm},  // Arama terimini atar
-                Response = new CustomerIndexResponseModel{Customers = customers} // Listeyi atar
+                Request = new CustomerIndexRequestModel { SearchTerm = searchTerm },  // Arama terimini atar
+                Response = new CustomerIndexResponseModel { Customers = customers } // Listeyi atar
             };
             return View(pageVm); // Index.cshtml'i render eder
         }
@@ -47,10 +47,15 @@ namespace Project.MvcUI.Controllers
         /// Yeni müşteri ekleme formunu gösterir.
         /// </summary>
         [Authorize]
-        public IActionResult Create()
+        public IActionResult Create(string returnUrl)
         {
-            CustomerCreatePageVm pageVm = new(); // Boş VM hazırla
-            return View(pageVm);                 // Create.cshtml'i render et
+            // Eğer Rezervasyondan gelindiyse, returnUrl="/Reservation/Create" olur
+            // Direkt /Customer/Create’te returnUrl null
+            var pageVm = new CustomerCreatePageVm
+            {
+                ReturnUrl = returnUrl
+            };
+            return View(pageVm);
         }
 
         /// <summary>
@@ -61,10 +66,12 @@ namespace Project.MvcUI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CustomerCreatePageVm pageVm)
         {
-            if (!ModelState.IsValid) return View(pageVm); // Validasyon hatalıysa formu tekrar göster
+            // Validasyon hatası varsa formu tekrar göster (ReturnUrl pageVm içinde var)
+            if (!ModelState.IsValid)
+                return View(pageVm);
 
-            // RequestModel'den DTO'ya dönüşüm
-            CustomerDto dto = new()
+            // DTO’ya dönüşüm
+            var dto = new CustomerDto
             {
                 BrideName = pageVm.Request.BrideName,
                 GroomName = pageVm.Request.GroomName,
@@ -78,13 +85,19 @@ namespace Project.MvcUI.Controllers
 
             try
             {
-                await _customerManager.CreateAsync(dto); // BLL üzerinden ekle
+                await _customerManager.CreateAsync(dto);
                 TempData["SuccessMessage"] = "Müşteri başarıyla eklendi.";
+
+                // Akışa göre yönlendir:
+                // 1) Rezervasyondan gelindiyse => Rezervasyon Oluştur sayfasına dön
+                if (!string.IsNullOrWhiteSpace(pageVm.ReturnUrl))
+                    return RedirectToAction("Create", "Reservation");
+
+                // 2) Direkt Customer/Create ise => Customer/Index’e dön
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                // Hata durumunda yanıt modelini doldur
                 pageVm.Response.IsSuccess = false;
                 pageVm.Response.ErrorMessage = ex.Message;
                 return View(pageVm);

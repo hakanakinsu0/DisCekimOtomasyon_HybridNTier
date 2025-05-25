@@ -1,0 +1,108 @@
+﻿@model ReservationSummaryPageVm
+@using Project.Entities.Enums
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Rezervasyon Özeti";
+    var tr = new CultureInfo("tr-TR");
+    string FormatStatus(ReservationStatus s) => s switch
+    {
+        ReservationStatus.Created => "Rezervasyon Oluşturuldu",
+        ReservationStatus.PhotographerAssigned => "Fotoğrafçı Atandı",
+        ReservationStatus.ShootCompleted => "Çekim Yapıldı",
+        ReservationStatus.SentToPrint => "Baskıya Gönderildi",
+        ReservationStatus.AlbumReceived => "Albüm Teslim Alındı",
+        ReservationStatus.DeliveredToCustomer => "Müşteriye Teslim Edildi",
+        _ => s.ToString()
+    };
+    string FormatDate(DateTime dt) =>
+        dt.ToString("dd'/'MM'/'yyyy dddd HH:mm", tr);
+
+    // Eğer daha önceden ödeme yapılmışsa, o kayıttaki TotalAmount'i kullan
+    decimal routeTotal = Model.Payments.Any()
+        ? Model.Payments.First().TotalAmount
+        : Model.TotalWithExtras;
+}
+
+<div class="container py-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <h4>Rezervasyon Bilgileri</h4>
+    <dl class="row">
+        <dt class="col-sm-3">Müşteri</dt>
+        <dd class="col-sm-9">@Model.CustomerName</dd>
+
+        <dt class="col-sm-3">Mekan</dt>
+        <dd class="col-sm-9">@Model.LocationName</dd>
+
+        <dt class="col-sm-3">Hizmet Kategorisi</dt>
+        <dd class="col-sm-9">@Model.ServiceCategoryName</dd>
+
+        <dt class="col-sm-3">Paket Seçeneği</dt>
+        <dd class="col-sm-9">@Model.PackageOptionName</dd>
+
+        <dt class="col-sm-3">Tarih</dt>
+        <dd class="col-sm-9">@FormatDate(Model.Reservation.ScheduledDate)</dd>
+
+        <dt class="col-sm-3">Süre</dt>
+        <dd class="col-sm-9">@Model.Reservation.Duration</dd>
+
+        <dt class="col-sm-3">Durum</dt>
+        <dd class="col-sm-9">@FormatStatus(Model.Reservation.ReservationStatus)</dd>
+    </dl>
+
+    <h4>Ödeme Bilgileri</h4>
+    @if (Model.Payments.Any())
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Ödeme Tarihi</th>
+                    <th>Tutar</th>
+                    <th>Ödenen</th>
+                    <th>Kalan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model.Payments)
+                {
+                    <tr>
+                        <td>@FormatDate(p.LastPaymentDate.Value)</td>
+                        <td>@p.TotalAmount.ToString("C", tr)</td>
+                        <td>@p.PaidAmount.ToString("C", tr)</td>
+                        <td>@p.RemainingAmount.ToString("C", tr)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            Henüz bu rezervasyon için bir ödeme kaydı bulunmuyor.
+        </div>
+    }
+
+    <div class="mt-4 d-flex gap-2">
+        <div class="mt-4">
+            <a asp-action="Index" class="btn btn-secondary">Rezervasyonlar</a>
+            <a asp-controller="Payment"
+               asp-action="Create"
+               asp-route-reservationId="@Model.Reservation.Id"
+               asp-route-totalAmount="@routeTotal"
+               class="btn btn-primary">
+                Yeni Ödeme Ekle
+            </a>
+            <form asp-controller="Reservation"
+                  asp-action="SendSummaryEmail"
+                  method="post"
+                  class="d-inline">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.Reservation.Id" />
+                <button type="submit" class="btn btn-info">
+                    Mail Gönder
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -10,5 +10,7 @@ namespace Project.BLL.Managers.Abstracts
 {
     public interface IPaymentManager : IManager<PaymentDto, Payment>
     {
+        Task<List<PaymentDto>> GetByReservationIdAsync(int reservationId);
+
     }
 }

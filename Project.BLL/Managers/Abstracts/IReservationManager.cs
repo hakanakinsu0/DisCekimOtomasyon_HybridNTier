@@ -10,5 +10,7 @@ namespace Project.BLL.Managers.Abstracts
 {
     public interface IReservationManager : IManager<ReservationDto, Reservation>
     {
+        Task<ReservationDto> CreateAsync(ReservationDto dto);
+
     }
 }

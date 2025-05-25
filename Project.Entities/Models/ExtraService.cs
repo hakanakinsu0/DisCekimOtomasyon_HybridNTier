@@ -20,6 +20,5 @@ namespace Project.Entities.Models
 
         //Relational Properties
         public virtual ExtraServiceCategory ExtraServiceCategory { get; set; } // 1 ExtraService 1 ExtraServiceCategory, 1 ExtraServiceCategory N ExtraService
-        public virtual ICollection<PackageExtra> PackageExtras { get; set; } // 1 ExtraService N PackageExtra, 1 PackageExtra 1 ExtraService
     }
 }

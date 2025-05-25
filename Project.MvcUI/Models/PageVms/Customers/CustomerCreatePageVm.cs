@@ -13,5 +13,9 @@ namespace Project.MvcUI.Models.PageVms.Customers
 
         // Ekleme işleminin sonucuna dair başarı durumu ve hata mesajını içerir.
         public CustomerCreateResponseModel Response { get; set; } = new CustomerCreateResponseModel();
+
+        public string? ReturnUrl { get; set; }
+
+
     }
 }

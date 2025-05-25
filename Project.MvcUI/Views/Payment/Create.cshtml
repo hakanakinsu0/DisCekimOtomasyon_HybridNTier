@@ -1,41 +1,38 @@
 ﻿@model PaymentCreatePageVm
 
-@{
-    ViewData["Title"] = "Yeni Ödeme Ekle";
-}
+<h2>Yeni Ödeme Ekle</h2>
 
-<div class="container py-4">
-    <h2>@ViewData["Title"]</h2>
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
 
-    <form asp-action="Create" method="post" novalidate>
-        @Html.AntiForgeryToken()
-        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+    <!-- Rezervasyon / Müşteri -->
+    <div class="mb-3">
+        <label class="form-label">Rezervasyon / Müşteri</label>
+        <input type="hidden" asp-for="Request.ReservationId" />
+        <input class="form-control" readonly
+               value="#@Model.Request.ReservationId – @Model.CustomerName" />
+    </div>
 
-        <div class="mb-3">
-            <label asp-for="Request.ReservationId" class="form-label"></label>
-            <select asp-for="Request.ReservationId" asp-items="Model.Reservations" class="form-select">
-                <option value="">-- Rezervasyon Seçin --</option>
-            </select>
-            <span asp-validation-for="Request.ReservationId" class="text-danger small"></span>
-        </div>
+    <!-- Toplam Tutar: artık her zaman editable -->
+    <div class="mb-3">
+        <label asp-for="Request.TotalAmount" class="form-label">Toplam Tutar</label>
+        <input asp-for="Request.TotalAmount" class="form-control" />
+        <span asp-validation-for="Request.TotalAmount" class="text-danger"></span>
+    </div>
 
-        <div class="form-floating mb-3">
-            <input asp-for="Request.TotalAmount" class="form-control" placeholder="Toplam Tutar" />
-            <label asp-for="Request.TotalAmount"></label>
-            <span asp-validation-for="Request.TotalAmount" class="text-danger small"></span>
-        </div>
+    <!-- Kalan Bakiye -->
+    <div class="mb-3">
+        <label class="form-label">Kalan Bakiye</label>
+        <input class="form-control" readonly
+               value="@Model.RemainingAmount.ToString("C")" />
+    </div>
 
-        <div class="form-floating mb-3">
-            <input asp-for="Request.PaidAmount" class="form-control" placeholder="Ödenen Tutar" />
-            <label asp-for="Request.PaidAmount"></label>
-            <span asp-validation-for="Request.PaidAmount" class="text-danger small"></span>
-        </div>
+    <!-- Ödenmesi gereken -->
+    <div class="mb-3">
+        <label asp-for="Request.PaidAmount" class="form-label">Ödenecek Tutar</label>
+        <input asp-for="Request.PaidAmount" class="form-control" />
+        <span asp-validation-for="Request.PaidAmount" class="text-danger"></span>
+    </div>
 
-        <button type="submit" class="btn btn-success">Kaydet</button>
-        <a asp-action="Index" class="btn btn-secondary ms-2">İptal</a>
-    </form>
-</div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+</form>

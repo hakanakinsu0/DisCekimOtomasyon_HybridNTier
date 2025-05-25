@@ -29,7 +29,6 @@ namespace Project.BLL.DependencyResolvers
             services.AddScoped<IExtraServiceManager, ExtraServiceManager>();
             services.AddScoped<ILocationManager, LocationManager>();
             services.AddScoped<IPackageOptionManager, PackageOptionManager>();
-            services.AddScoped<IPackageExtraManager, PackageExtraManager>();
             services.AddScoped<IPaymentManager, PaymentManager>();
             services.AddScoped<IPhotographerManager, PhotographerManager>();
             services.AddScoped<IReservationManager, ReservationManager>();

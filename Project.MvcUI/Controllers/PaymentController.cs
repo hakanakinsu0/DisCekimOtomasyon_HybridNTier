@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Project.BLL.DtoClasses;
 using Project.BLL.Managers.Abstracts;
+using Project.BLL.Managers.Concretes;
 using Project.Entities.Enums;
 using Project.MvcUI.Models.PageVms.Payments;
 using Project.MvcUI.Models.PureVms.RequestModels.Payments;
@@ -13,11 +14,19 @@ namespace Project.MvcUI.Controllers
     {
         readonly IPaymentManager _paymentManager;
         readonly IReservationManager _reservationManager;
+        readonly ICustomerManager _customerManager;
+        readonly IPackageOptionManager _packageOptionManager;
+        readonly IReservationExtraManager _reservationExtraManager;
+        readonly IExtraServiceManager _serviceManager;
 
-        public PaymentController(IPaymentManager paymentManager, IReservationManager reservationManager)
+        public PaymentController(IPaymentManager paymentManager, IReservationManager reservationManager, ICustomerManager customerManager, IPackageOptionManager packageOptionManager, IReservationExtraManager reservationExtraManager, IExtraServiceManager serviceManager)
         {
             _paymentManager = paymentManager;
             _reservationManager = reservationManager;
+            _customerManager = customerManager;
+            _packageOptionManager = packageOptionManager;
+            _reservationExtraManager = reservationExtraManager;
+            _serviceManager = serviceManager;
         }
 
         #region PaymentIndexAction
@@ -54,6 +63,31 @@ namespace Project.MvcUI.Controllers
                 Response = new PaymentIndexResponseModel { Payments = list }
             };
 
+            // Her farklı reservationId için:
+            var distinctIds = list.Select(p => p.ReservationId).Distinct();
+            foreach (var resId in distinctIds)
+            {
+                // 1) Rezervasyonu getir
+                var reservation = await _reservationManager.GetByIdAsync(resId);
+                if (reservation == null)
+                {
+                    pageVm.CustomerNames[resId] = "—";
+                    continue;
+                }
+
+                // 2) Oradan CustomerId'yi alıp müşteri kaydını getir
+                var customer = await _customerManager.GetByIdAsync(reservation.CustomerId);
+                if (customer == null)
+                {
+                    pageVm.CustomerNames[resId] = "—";
+                }
+                else
+                {
+                    pageVm.CustomerNames[resId] =
+                        $"{customer.BrideName} {customer.GroomName} {customer.LastName}";
+                }
+            }
+
             return View(pageVm);
         }
 
@@ -62,60 +96,131 @@ namespace Project.MvcUI.Controllers
         #region PaymentCreateAction
 
         /// <summary>
-        /// Ödeme ekleme formunu görüntüler; rezervasyon dropdown’unu doldurur.
+        /// Ödeme ekleme formunu görüntüler; rezervasyon dropdown’unu doldurur ve
+        /// toplam tutarı paket+ekstra hesaplayıp formda gösterir (düzenlenebilir).
         /// </summary>
-        public async Task<IActionResult> Create()
+        [HttpGet]
+        public async Task<IActionResult> Create(int reservationId, decimal totalAmount = 0m)
         {
-            // Tüm rezervasyonları çek ve soft-deleted olanları çıkar
-            var reservations = (await _reservationManager.GetAllAsync())
-                                   .Where(r => r.Status != DataStatus.Deleted)
-                                   .ToList();
+            // 1) Rezervasyonu getir
+            var reservation = await _reservationManager.GetByIdAsync(reservationId);
+            if (reservation == null || reservation.Status == DataStatus.Deleted)
+                return NotFound();
 
+            // 2) Müşteriyi getir
+            var customer = await _customerManager.GetByIdAsync(reservation.CustomerId);
+            var customerName = $"{customer.BrideName} {customer.GroomName} {customer.LastName}";
+
+            // 3) Önceki ödemeleri al, bakiyeyi hesapla
+            var payments = await _paymentManager.GetByReservationIdAsync(reservationId);
+            var paidSoFar = payments.Sum(p => p.PaidAmount);
+
+            // 4) Eğer URL’den totalAmount geldiyse (ReservationExtra’dan) onu al,
+            //    aksi halde paket+ekstra toplamı hesapla.
+            decimal computedTotal;
+            if (totalAmount > 0m)
+            {
+                computedTotal = totalAmount;
+            }
+            else
+            {
+                var pkg = await _packageOptionManager.GetByIdAsync(reservation.PackageOptionId);
+                var baseAmount = pkg.Price;
+
+                var extras = (await _reservationExtraManager.GetAllAsync())
+                    .Where(x => x.ReservationId == reservationId && x.Status != DataStatus.Deleted)
+                    .ToList();
+                var allServices = await _serviceManager.GetAllAsync();
+                var extrasTotal = extras.Sum(e =>
+                {
+                    var svc = allServices.FirstOrDefault(s => s.Id == e.ExtraServiceId);
+                    return svc != null
+                        ? svc.Price * e.Quantity
+                        : 0m;
+                });
+
+                computedTotal = baseAmount + extrasTotal;
+            }
+
+            // 5) VM’i doldur
             var pageVm = new PaymentCreatePageVm
             {
-                Reservations = reservations
-                    .Select(r => new SelectListItem(
-                        text: $"#{r.Id} – {r.ScheduledDate:g}",
-                        value: r.Id.ToString()))
-                    .ToList()
+                Request = new PaymentCreateRequestModel
+                {
+                    ReservationId = reservationId,
+                    TotalAmount = computedTotal,
+                    PaidAmount = 0m
+                },
+                TotalAmount = computedTotal,
+                RemainingAmount = computedTotal - paidSoFar,
+                CustomerName = customerName,
+                Reservations = new List<SelectListItem>
+        {
+            new SelectListItem(
+                text:     $"#{reservation.Id} – {reservation.ScheduledDate:dd'/'MM'/'yyyy HH:mm}",
+                value:    reservation.Id.ToString(),
+                selected: true)
+        }
             };
 
             return View(pageVm);
         }
 
         /// <summary>
-        /// Yeni ödeme işlemini gerçekleştirir; RemainingAmount ve LastPaymentDate otomatik hesaplanır.
+        /// Yeni ödeme işlemini gerçekleştirir; girilen totalAmount’a göre kalan hesaplanır.
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PaymentCreatePageVm pageVm)
         {
+            // 1) Form validasyonu
             if (!ModelState.IsValid)
+                return await Create(pageVm.Request.ReservationId);
+
+            // 2) Mevcut ödemeleri alıp geçmiş ödeneni hesapla
+            var payments = await _paymentManager.GetByReservationIdAsync(pageVm.Request.ReservationId);
+            var paidSoFar = payments.Sum(p => p.PaidAmount);
+
+            // 3) Toplam tutarı belirle
+            var totalAmount = payments.Any()
+                ? payments.First().TotalAmount   // önceki kayıttan gelen toplam
+                : pageVm.Request.TotalAmount.Value; // formdan gelen ilk ödeme tutarı
+
+            // 4) Kalan bakiyeyi hesapla
+            var remainingBefore = totalAmount - paidSoFar;
+
+            // — Eğer bakiye sıfır veya negatifse, yeni ödeme girişine izin verme —
+            if (remainingBefore <= 0)
             {
-                // Dropdown’u yeniden yükle
-                return await Create();
+                TempData["ErrorMessage"] = "Bu rezervasyon için borç bulunmamaktadır.";
+                return RedirectToAction("Summary", "Reservation", new { id = pageVm.Request.ReservationId });
             }
 
-            // DTO’ya dönüştür
+            // 5) Yeni ödenecek tutarı ve kalan sonrası bakiyeyi hesapla
+            var newPaid = pageVm.Request.PaidAmount;
+            var remainingAfter = remainingBefore - newPaid;
+
+            // 6) DTO oluşturup kaydet
             var dto = new PaymentDto
             {
                 ReservationId = pageVm.Request.ReservationId,
-                TotalAmount = pageVm.Request.TotalAmount,      // Kullanıcı girdi
-                PaidAmount = pageVm.Request.PaidAmount,       // Kullanıcı girdi
-                RemainingAmount = pageVm.Request.TotalAmount    // Geçici, aşağıda düzeltiyoruz
-                                  - pageVm.Request.PaidAmount,
-                LastPaymentDate = DateTime.Now,                    // Son ödeme tarihi şimdi
+                TotalAmount = totalAmount,
+                PaidAmount = newPaid,
+                RemainingAmount = remainingAfter,
+                LastPaymentDate = DateTime.Now,
                 CreatedDate = DateTime.Now,
                 Status = DataStatus.Inserted
             };
 
-            await _paymentManager.CreateAsync(dto);              // BaseManager.CreateAsync() :contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}
-
+            await _paymentManager.CreateAsync(dto);
             TempData["SuccessMessage"] = "Ödeme başarıyla kaydedildi.";
-            return RedirectToAction(nameof(Index));
+
+            // 7) Özet sayfasına yönlendir
+            return RedirectToAction("Summary", "Reservation", new { id = dto.ReservationId });
         }
 
         #endregion
+
 
         #region PaymentEditAction
 

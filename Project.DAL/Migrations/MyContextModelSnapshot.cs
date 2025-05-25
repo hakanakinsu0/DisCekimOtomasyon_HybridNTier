@@ -58,7 +58,7 @@ namespace Project.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "8255a608-774e-4611-b104-83938e844a6b",
+                            ConcurrencyStamp = "526b9bce-c59c-4a2f-9d4e-a99cc0703890",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -229,7 +229,7 @@ namespace Project.DAL.Migrations
                             ContactPersonEmail = "cizgialbum@gmail.com",
                             ContactPersonName = "Test",
                             ContactPersonPhone = "+905359750193",
-                            CreatedDate = new DateTime(2025, 5, 13, 19, 28, 55, 145, DateTimeKind.Local).AddTicks(7409),
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3510),
                             Email = "cizgialbum@gmail.com",
                             Name = "ÇİZGİ ALBÜM FOTOĞRAFÇILIK",
                             Phone = "+02125387994",
@@ -325,16 +325,16 @@ namespace Project.DAL.Migrations
                             Id = 1,
                             AccessFailedCount = 0,
                             ActivationCode = new Guid("00000000-0000-0000-0000-000000000000"),
-                            ConcurrencyStamp = "f986ee36-c2b4-4cee-94bd-d7d04d0b927d",
-                            CreatedDate = new DateTime(2025, 5, 13, 19, 28, 55, 145, DateTimeKind.Local).AddTicks(7183),
+                            ConcurrencyStamp = "2494aab1-f536-475e-a804-2924eacae883",
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3366),
                             Email = "fotoeylul@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "FOTOEYLUL@EMAIL.COM",
                             NormalizedUserName = "FOTOEYLUL",
-                            PasswordHash = "AQAAAAIAAYagAAAAEB1Kr+ORPDtFCis7NhU1PYllLPrRKw68NWeCZEeOlUm9ReyI/6C06KE/h4ujgTINzg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFMVtCso8NL189pDOKyArskaHMQXXVN8CNrbsspozT0doJ6sqVnt5jSY+eWn2tLrhw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b7edab9d-0612-4e23-bcf0-0e269f806de4",
+                            SecurityStamp = "d8be4fb8-3fdd-4aab-b728-0639a9a10809",
                             Status = 1,
                             TwoFactorEnabled = false,
                             UserName = "fotoeylul"
@@ -423,6 +423,65 @@ namespace Project.DAL.Migrations
                     b.HasIndex("ExtraServiceCategoryId");
 
                     b.ToTable("ExtraServices");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3748),
+                            ExtraServiceCategoryId = 1,
+                            ModifiedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3748),
+                            Name = "30x40 Kanvas",
+                            Price = 600.00m,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3748),
+                            ExtraServiceCategoryId = 1,
+                            ModifiedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3748),
+                            Name = "50x60 Kanvas",
+                            Price = 950.00m,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3748),
+                            ExtraServiceCategoryId = 1,
+                            Name = "50x70 Kanvas",
+                            Price = 950.00m,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3748),
+                            ExtraServiceCategoryId = 1,
+                            ModifiedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3748),
+                            Name = "70x100 Kanvas",
+                            Price = 1200.00m,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3748),
+                            ExtraServiceCategoryId = 1,
+                            Name = "75x100 3 Parçalı Kanvas",
+                            Price = 2200.00m,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3748),
+                            ExtraServiceCategoryId = 1,
+                            Name = "75x125 5 Parçalı Kanvas",
+                            Price = 3200.00m,
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("Project.Entities.Models.ExtraServiceCategory", b =>
@@ -452,6 +511,50 @@ namespace Project.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ExtraServiceCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3651),
+                            Name = "Kanvas",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3651),
+                            Name = "Poster",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3651),
+                            Name = "Saat",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3651),
+                            Name = "Lüx Çerçeve",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3651),
+                            Name = "Lake Çerçeve",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3651),
+                            Name = "Oval Çerçeve",
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("Project.Entities.Models.Location", b =>
@@ -502,44 +605,78 @@ namespace Project.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Locations");
-                });
 
-            modelBuilder.Entity("Project.Entities.Models.PackageExtra", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ExtraServiceId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PackageOptionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExtraServiceId");
-
-                    b.HasIndex("PackageOptionId");
-
-                    b.ToTable("PackageExtras");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Yan Yol, Ataşehir, Rıfat Danışman Sok., 34758",
+                            City = "İstanbul",
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3565),
+                            District = "Ataşehir",
+                            IsFree = true,
+                            Name = "Nezahat Gökyiğit Botanik Bahçesi",
+                            Phone = "02164564437",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Küçük Çamlıca, 34696",
+                            City = "İstanbul",
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3565),
+                            District = "Üsküdar",
+                            IsFree = true,
+                            Name = "Küçük Çamlıca",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "Kandilli, Vaniköy Cd No : 12, 34684",
+                            City = "İstanbul",
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3565),
+                            District = "Üsküdar",
+                            IsFree = true,
+                            Name = "Adile Sultan Kasrı",
+                            Phone = "(0216) 332 23 33",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Address = "Yıldız, Çırağan Cd., 34349",
+                            City = "İstanbul",
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3565),
+                            District = "Beşiktaş",
+                            IsFree = true,
+                            Name = "Yıldız Parkı",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Address = "Piri Paşa, Rahmi M. Koç Caddesi No: 3, 34445",
+                            City = "İstanbul",
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3565),
+                            District = "Beyoğlu",
+                            IsFree = false,
+                            Name = "Rahmi M. Koç Müzesi",
+                            Phone = "(0212) 369 66 00",
+                            Price = 600.00m,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Address = "Reşitpaşa, Emirgan Sk., 34467",
+                            City = "İstanbul",
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3565),
+                            District = "Sarıyer",
+                            IsFree = true,
+                            Name = "Emirgan Korusu",
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("Project.Entities.Models.PackageOption", b =>
@@ -659,21 +796,22 @@ namespace Project.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2025, 5, 13, 19, 28, 55, 145, DateTimeKind.Local).AddTicks(7370),
-                            Fee = 0m,
-                            FirstName = "Fotografci",
-                            LastName = "Bir",
-                            Phone = "+905554443322",
-                            Status = 1
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3531),
+                            Fee = 2000.00m,
+                            FirstName = "Hakan",
+                            LastName = "Akınsu",
+                            ModifiedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3531),
+                            Phone = "05538971905",
+                            Status = 2
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2025, 5, 13, 19, 28, 55, 145, DateTimeKind.Local).AddTicks(7374),
-                            Fee = 2000m,
-                            FirstName = "Fotografci",
-                            LastName = "Iki",
-                            Phone = "+05551112233",
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3531),
+                            Fee = 5000.00m,
+                            FirstName = "Mustafa Osman",
+                            LastName = "Kaya",
+                            Phone = "05538275858",
                             Status = 1
                         });
                 });
@@ -812,6 +950,40 @@ namespace Project.DAL.Migrations
                     b.HasIndex("AlbumCompanyId");
 
                     b.ToTable("ServiceCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AlbumCompanyId = 1,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3677),
+                            Name = "New Line Collection",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AlbumCompanyId = 1,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3677),
+                            Name = "Standart Seri",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AlbumCompanyId = 1,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3677),
+                            Name = "Kampanya Seri",
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AlbumCompanyId = 1,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3677),
+                            Name = "Çizgi Avantaj Seri",
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("Project.Entities.Models.SizeOption", b =>
@@ -846,6 +1018,176 @@ namespace Project.DAL.Migrations
                     b.HasIndex("ServiceCategoryId");
 
                     b.ToTable("SizeOptions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "25x70 New Line",
+                            ServiceCategoryId = 1,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "30x60 New Line",
+                            ServiceCategoryId = 1,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "30x80 New Line",
+                            ServiceCategoryId = 1,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "25x70 Standart",
+                            ServiceCategoryId = 2,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "30x50 Standart",
+                            ServiceCategoryId = 2,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "25x60 Standart",
+                            ServiceCategoryId = 2,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "30x60 Standart",
+                            ServiceCategoryId = 2,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "30x80 Standart",
+                            ServiceCategoryId = 2,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "25x60 Kampanya",
+                            ServiceCategoryId = 3,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "25x50 Kampanya",
+                            ServiceCategoryId = 3,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "25x70 Kampanya",
+                            ServiceCategoryId = 3,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "30x50 Kampanya",
+                            ServiceCategoryId = 3,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "30x60 Kampanya",
+                            ServiceCategoryId = 3,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "30x76 Kampanya",
+                            ServiceCategoryId = 3,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "30x80 Kampanya",
+                            ServiceCategoryId = 3,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "25x70 Çizgi Avantaj",
+                            ServiceCategoryId = 4,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "30x60 Çizgi Avantaj",
+                            ServiceCategoryId = 4,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "30x70 Çizgi Avantaj",
+                            ServiceCategoryId = 4,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "25x50 Çizgi Avantaj",
+                            ServiceCategoryId = 4,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "25x60 Çizgi Avantaj",
+                            ServiceCategoryId = 4,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedDate = new DateTime(2025, 5, 16, 17, 7, 17, 498, DateTimeKind.Local).AddTicks(3697),
+                            Dimension = "30x50 Çizgi Avantaj",
+                            ServiceCategoryId = 4,
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -908,25 +1250,6 @@ namespace Project.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("ExtraServiceCategory");
-                });
-
-            modelBuilder.Entity("Project.Entities.Models.PackageExtra", b =>
-                {
-                    b.HasOne("Project.Entities.Models.ExtraService", "ExtraService")
-                        .WithMany("PackageExtras")
-                        .HasForeignKey("ExtraServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Project.Entities.Models.PackageOption", "PackageOption")
-                        .WithMany("PackageExtras")
-                        .HasForeignKey("PackageOptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ExtraService");
-
-                    b.Navigation("PackageOption");
                 });
 
             modelBuilder.Entity("Project.Entities.Models.Payment", b =>
@@ -1042,11 +1365,6 @@ namespace Project.DAL.Migrations
                     b.Navigation("Reservations");
                 });
 
-            modelBuilder.Entity("Project.Entities.Models.ExtraService", b =>
-                {
-                    b.Navigation("PackageExtras");
-                });
-
             modelBuilder.Entity("Project.Entities.Models.ExtraServiceCategory", b =>
                 {
                     b.Navigation("ExtraServices");
@@ -1059,8 +1377,6 @@ namespace Project.DAL.Migrations
 
             modelBuilder.Entity("Project.Entities.Models.PackageOption", b =>
                 {
-                    b.Navigation("PackageExtras");
-
                     b.Navigation("Reservations");
                 });
 

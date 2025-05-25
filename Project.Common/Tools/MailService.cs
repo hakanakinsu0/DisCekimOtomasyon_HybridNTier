@@ -14,10 +14,10 @@ namespace Project.Common.Tools
     public static class MailService
     {
         // Varsayılan gönderici e-posta adresi
-        private const string DefaultSender = "testemail3172@gmail.com";
+        private const string DefaultSender = "fotoeylul1992@gmail.com";
 
         // Varsayılan gönderici e-posta şifresi (uygulama şifresi)
-        private const string DefaultPassword = "rvzhpxwpegickwtq";
+        private const string DefaultPassword = "hpci uiyo czzs qaak";
 
         // Gmail SMTP sunucusu
         private const string SmtpHost = "smtp.gmail.com";

@@ -70,9 +70,19 @@
                 <label asp-for="Request.ReservationStatus" class="form-label"></label>
                 <select asp-for="Request.ReservationStatus" class="form-select">
                     <option value="">-- Durum Seçin --</option>
-                    @foreach (var status in Enum.GetValues<ReservationStatus>())
+                    @foreach (ReservationStatus status in Enum.GetValues(typeof(ReservationStatus)))
                     {
-                        <option value="@status">@status</option>
+                        var text = status switch
+                        {
+                            ReservationStatus.Created => "Rezervasyon Oluşturuldu",
+                            ReservationStatus.PhotographerAssigned => "Fotoğrafçı Atandı",
+                            ReservationStatus.ShootCompleted => "Çekim Yapıldı",
+                            ReservationStatus.SentToPrint => "Baskıya Gönderildi",
+                            ReservationStatus.AlbumReceived => "Albüm Teslim Alındı",
+                            ReservationStatus.DeliveredToCustomer => "Müşteriye Teslim Edildi",
+                            _ => status.ToString()
+                        };
+                        <option value="@status">@text</option>
                     }
                 </select>
                 <span asp-validation-for="Request.ReservationStatus" class="text-danger small"></span>

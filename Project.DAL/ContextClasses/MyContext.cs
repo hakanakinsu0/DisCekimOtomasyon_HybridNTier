@@ -44,13 +44,17 @@ namespace Project.DAL.ContextClasses
             builder.ApplyConfiguration(new PackageOptionConfiguration());
             builder.ApplyConfiguration(new ExtraServiceCategoryConfiguration());
             builder.ApplyConfiguration(new ExtraServiceConfiguration());
-            builder.ApplyConfiguration(new PackageExtraConfiguration());
             builder.ApplyConfiguration(new ReservationExtraConfiguration());
 
             // Seed (Başlangıç) Verileri Burada Çağrılır
             UserAndRoleSeed.SeedAdminUser(builder);
-            PhotographerSeed.SeedPhotographers(builder);
             AlbumCompanySeed.SeedAlbumCompanies(builder);
+            PhotographerSeed.SeedPhotographers(builder);
+            LocationSeed.SeedLocations(builder);
+            ExtraServiceCategorySeed.SeedExtraServiceCategories(builder);
+            ServiceCategorySeed.SeedServiceCategories(builder);
+            SizeOptionSeed.SeedSizeOptions(builder);
+            ExtraServiceSeed.SeedExtraServices(builder);
         }
 
         // Veritabanı Tabloları
@@ -66,7 +70,6 @@ namespace Project.DAL.ContextClasses
         public DbSet<PackageOption> PackageOptions { get; set; }
         public DbSet<ExtraServiceCategory> ExtraServiceCategories { get; set; }
         public DbSet<ExtraService> ExtraServices { get; set; }
-        public DbSet<PackageExtra> PackageExtras { get; set; }
         public DbSet<ReservationExtra> ReservationExtras { get; set; }
     }
 }

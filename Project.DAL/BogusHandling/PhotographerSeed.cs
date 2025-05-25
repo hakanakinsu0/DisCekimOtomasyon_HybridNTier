@@ -13,27 +13,32 @@ namespace Project.DAL.BogusHandling
     {
         public static void SeedPhotographers(ModelBuilder modelBuilder)
         {
+            var now = DateTime.Now;
             var photographers = new List<Photographer>
             {
                 new Photographer
                 {
                     Id = 1,
-                    FirstName = "Fotografci",
-                    LastName = "Bir",
-                    Phone = "+905554443322",
-                    Fee = 0m,
-                    CreatedDate = DateTime.Now,
-                    Status = DataStatus.Inserted
+                    FirstName     = "Hakan",
+                    LastName      = "Akınsu",
+                    Phone         = "05538971905",
+                    Fee           = 2000.00m,
+                    CreatedDate   = now,
+                    ModifiedDate  = now,
+                    DeletedDate   = null,
+                    Status        = DataStatus.Updated
                 },
                 new Photographer
                 {
                     Id = 2,
-                    FirstName = "Fotografci",
-                    LastName = "Iki",
-                    Phone = "+05551112233",
-                    Fee = 2000m,
-                    CreatedDate = DateTime.Now,
-                    Status = DataStatus.Inserted
+                    FirstName     = "Mustafa Osman",
+                    LastName      = "Kaya",
+                    Phone         = "05538275858",
+                    Fee           = 5000.00m,
+                    CreatedDate   = now,
+                    ModifiedDate  = null,
+                    DeletedDate   = null,
+                    Status        = DataStatus.Inserted
                 }
             };
 

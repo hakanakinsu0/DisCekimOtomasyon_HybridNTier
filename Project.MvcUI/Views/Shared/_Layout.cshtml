@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - Dış Çekim Otomasyon</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
 </head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -16,20 +17,65 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="mainNav">
                 @if (User.Identity.IsAuthenticated)
                 {
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" asp-controller="Customer" asp-action="Index">Müşteriler</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Reservation" asp-action="Index">Rezervasyonlar</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Photographer" asp-action="Index">Fotoğrafçılar</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Location" asp-action="Index">Mekanlar</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="ExtraService" asp-action="Index">Ekstra Hizmetler</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="ExtraServiceCategory" asp-action="Index">Hizmet Kategorileri</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="PackageOption" asp-action="Index">Paketler</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Payment" asp-action="Index">Ödemeler</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="AppUser" asp-action="Index">Kullanıcılar</a></li>
+                        <!-- Ana linkler -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Customer" asp-action="Index">Müşteri Yönetimi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Reservation" asp-action="Index">Rezervasyon Yönetimi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Payment" asp-action="Index">Ödeme Yönetimi</a>
+                        </li>
+
+                        <!-- Diğer İşlemler dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="otherDropdown"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Diğer İşlemler
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="otherDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="ExtraService" asp-action="Index">
+                                        Ekstra Hizmetler
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Photographer" asp-action="Index">
+                                        Fotoğrafçılar
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="ExtraServiceCategory" asp-action="Index">
+                                        Hizmet Kategorileri
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="AppUser" asp-action="Index">
+                                        Kullanıcılar
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Location" asp-action="Index">
+                                        Mekanlar
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="PackageOption" asp-action="Index">
+                                        Paketler
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                     </ul>
+
+                    <!-- Sağ tarafta çıkış -->
                     <form asp-controller="Account" asp-action="Logout" method="post" class="d-flex">
                         <button type="submit" class="btn btn-outline-light btn-sm">Çıkış Yap</button>
                     </form>

@@ -11,10 +11,10 @@ namespace Project.MvcUI.Models.PureVms.RequestModels.Payments
         [Display(Name = "Rezervasyon")]
         public int ReservationId { get; set; }                // Hangi rezervasyona ait olduğu
 
-        [Required(ErrorMessage = "{0} zorunludur.")]
+        //[Required(ErrorMessage = "{0} zorunludur.")]
         [DataType(DataType.Currency)]
         [Display(Name = "Toplam Tutar")]
-        public decimal TotalAmount { get; set; }              // Ödemenin referans toplam tutarı
+        public decimal? TotalAmount { get; set; }              // Ödemenin referans toplam tutarı
 
         [Required(ErrorMessage = "{0} zorunludur.")]
         [DataType(DataType.Currency)]

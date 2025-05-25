@@ -17,5 +17,15 @@ namespace Project.MvcUI.Models.PageVms.Payments
 
         // Rezervasyonları dropdown olarak göstermek için
         public List<SelectListItem> Reservations { get; set; } = new();
+
+
+        public decimal TotalAmount { get; set; }
+        public decimal RemainingAmount { get; set; }
+        public bool IsFirstPayment { get; set; }
+
+        public string CustomerName { get; set; } = "";
+
+
     }
+
 }

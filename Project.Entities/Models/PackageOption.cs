@@ -16,7 +16,6 @@ namespace Project.Entities.Models
         public decimal Price { get; set; }
 
         //Relational Properties 
-        public virtual ICollection<PackageExtra> PackageExtras { get; set; } // 1 PackageOption N PackageExtra, 1 PackageExtra 1 PackageOption
         public virtual ICollection<Reservation> Reservations { get; set; }
 
     }

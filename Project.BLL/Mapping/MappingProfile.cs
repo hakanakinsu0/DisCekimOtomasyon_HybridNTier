@@ -25,7 +25,6 @@ namespace Project.BLL.Mapping
             CreateMap<ExtraService, ExtraServiceDto>().ReverseMap();
             CreateMap<Location, LocationDto>().ReverseMap();
             CreateMap<PackageOption, PackageOptionDto>().ReverseMap();
-            CreateMap<PackageExtra, PackageExtraDto>().ReverseMap();
             CreateMap<Payment, PaymentDto>().ReverseMap();
             CreateMap<Photographer, PhotographerDto>().ReverseMap();
             CreateMap<Reservation, ReservationDto>().ReverseMap();
